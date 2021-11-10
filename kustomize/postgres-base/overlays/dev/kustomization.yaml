@@ -1,0 +1,12 @@
+bases:
+- ../../base
+patchesStrategicMerge:
+- localserv.yaml
+
+patchesJSON6902:
+  - path: clustername.json
+    target:
+      group: postgres-operator.crunchydata.com
+      version: v1beta1
+      kind: PostgresCluster
+      name: ".*"

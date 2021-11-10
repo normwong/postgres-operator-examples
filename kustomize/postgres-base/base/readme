@@ -1,0 +1,17 @@
+This is the desired base for all CN Postgresql installation in Anthos.
+
+overlays should be used to kustomize for specific database clusters.
+
+Kustomizations in the base:
+
+Default cluster name is: postgres
+Deploy in HA mode with 2 replicas.
+Annotations for centralized Prometheus
+Default is backup daily at midnight with 7 day retention.
+Centralized logging instead of postgres.log
+Super user, postgres, has secret exposed in k8s secret for the cluster.
+Monitoring data is exported.
+
+Todo: setup standard CN configuration generic id for Ansible Playbook.
+
+

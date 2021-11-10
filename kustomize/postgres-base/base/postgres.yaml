@@ -1,0 +1,76 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: postgres
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:centos8-13.4-1
+  postgresVersion: 13
+  # run initial sql
+  #databaseInitSQL:
+  #  key: init.sql
+  #  name: cn-policy-sql
+  instances:
+    - name: instance
+      replicas: 2
+      resources:
+        limits:
+          cpu: 125m
+          memory: 256Mi
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 1Gi
+      metadata:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9187"
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:centos8-2.35-0
+      global:
+        # keep backups for 7 days
+        repo1-retention-full: "7"
+        repo1-retention-full-type: time
+      repos:
+      - name: repo1
+        # backup daily at midnight
+        schedules:
+          full: "0 1 * * *"
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - "ReadWriteOnce"
+            resources:
+              requests:
+                storage: 1Gi
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        parameters:
+          max_parallel_workers: 2
+          max_worker_processes: 2
+          shared_buffers: 100MB
+          work_mem: 2MB
+          log_destination: "stderr"
+          logging_collector: "off"
+  users:
+    # expose postgres superuser
+    - name: postgres
+      databases:
+        - postgres
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.0.3-0
+  proxy:
+    pgBouncer:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:centos8-1.15-3
+      port: 5432
+      replicas: 1
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "125m"
+

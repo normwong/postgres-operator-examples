@@ -1,0 +1,6 @@
+clustername.json: replace the default clustername in the base with the desired clustername
+localserv.yaml: 
+  - postgresql version is selected by updating the image tag
+  - port number for the postgresql cluster, for istio we need a unique port number if there are multiple postgresql clusters within the same k8s cluster
+  - instance: customize cpu, memory, disk storage
+  - patroni: customize Postgresql parameters

@@ -1,0 +1,15 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: postgres
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:centos8-13.4-1
+  postgresVersion: 13
+  port: 5433
+  instances:
+    - name: instance
+      resources:
+        limits:
+          cpu: 125m
+          memory: 256Mi
+
