@@ -8,8 +8,19 @@ spec:
   port: 5433
   instances:
     - name: instance
+      replicas: 2
       resources:
         limits:
           cpu: 125m
           memory: 256Mi
+      dataVolumeClaimSpec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 1Gi
+      metadata:
+        annotations:
+          prometheus.io/scrape: "true"
+          prometheus.io/port: "9187"
 

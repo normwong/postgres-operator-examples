@@ -5,10 +5,6 @@ metadata:
 spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:centos8-13.4-1
   postgresVersion: 13
-  # run initial sql
-  #databaseInitSQL:
-  #  key: init.sql
-  #  name: cn-policy-sql
   instances:
     - name: instance
       replicas: 2
