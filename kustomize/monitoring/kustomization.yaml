@@ -6,8 +6,8 @@ resources:
   - ./dashboards
 # configuration files
   - prometheus-config.yaml
-  - alertmanager-config.yaml
-  - alertmanager-rules-config.yaml
+#  - alertmanager-config.yaml
+#  - alertmanager-rules-config.yaml
   - grafana-datasources.yaml
 # secrets
   - grafana-secret.yaml
@@ -16,7 +16,7 @@ resources:
   - rbac-cr.yaml
   - rbac-crb.yaml
 # Deployments
-  - deploy-alertmanager.yaml
+#  - deploy-alertmanager.yaml
   - deploy-grafana.yaml
   - deploy-prometheus.yaml
 # Services

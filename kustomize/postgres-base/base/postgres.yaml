@@ -11,7 +11,7 @@ spec:
       resources:
         limits:
           cpu: 125m
-          memory: 256Mi
+          memory: 64Mi
       dataVolumeClaimSpec:
         accessModes:
         - "ReadWriteOnce"
@@ -47,7 +47,7 @@ spec:
         parameters:
           max_parallel_workers: 2
           max_worker_processes: 2
-          shared_buffers: 100MB
+          shared_buffers: 32MB
           work_mem: 2MB
           log_destination: "stderr"
           logging_collector: "off"
@@ -67,6 +67,6 @@ spec:
       replicas: 1
       resources:
         requests:
-          memory: "64Mi"
+          memory: "32Mi"
           cpu: "125m"
 
