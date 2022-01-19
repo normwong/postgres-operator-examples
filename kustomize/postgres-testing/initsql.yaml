@@ -1,0 +1,19 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: hippo-init-sql
+  namespace: postgres-operator
+data:
+  init.sql: |-
+    \set ON_ERROR_STOP
+    \echo Any error will lead to exit code 3
+    DO
+    $do$
+    BEGIN
+       IF NOT EXISTS (
+          SELECT FROM pg_catalog.pg_roles  -- SELECT list can be empty for this
+          WHERE  rolname = 'configrole') THEN
+          create role configrole with login in role pgdba password 'md51dd3e0e9411459009d584af1837c0a15';
+       END IF;
+    END
+    $do$;
